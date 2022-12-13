@@ -1,0 +1,17 @@
+<html>
+	<table>
+		<tr>
+		<th>Product Name</th>
+		<th>Details</th>
+		<th>Date</th>
+		<th>Time</th>
+		</tr>
+		{% for v in myorder1 %}
+		<tr>
+		<td>{{v.orderid.productname}}</td>
+		<td>{{v.detail}}</td>
+		<td>{{v.date}}</td>
+		<td>{{v.time}}</td>
+		{% endfor %}
+	</table>
+</html>

@@ -1,0 +1,44 @@
+<html>
+	<script type="text/javascript">
+		function validation()
+		{
+			var num=/^[0-9]+$/;
+			var alpha=/^[a-zA-Z]+$/;
+
+			var productname=document.getElementById("productname")
+
+			if(productname.value.length==0)
+			{
+				alert("enter a productname")
+				return false;
+			}
+			else if(!productname.value.match(alpha))
+			{
+				alert("enter a valid productname")
+				productname.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+	</script>
+	<body>
+		<form method="post" action="{% url 'productsearchAction'%}">
+			{% csrf_token %}
+			<table>
+				<tr>
+				<td>Product Name</td>
+				<td><input type="text" name="productname" id="productname"></td>
+				</tr>
+
+				<tr>
+				<td></td>
+				<td><input type="submit" value="submit" onclick="return validation()"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

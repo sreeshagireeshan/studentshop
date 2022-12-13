@@ -1,0 +1,46 @@
+<html>
+	<body>
+		<table>
+			<th>NAME</th>
+			<th>ADDRESS</th>
+			<th>GENDER</th>
+			<th>PHONE</th>
+			<th>DOB</th>
+			<th>COUNTRY</th>
+			<th>FILE</th>
+			<th>USERNAME</th>
+			<th>PASSWORD</th>
+			<th>STATUS</th>
+
+			{% for v in seller %}
+			<tr>
+			<td>{{v.name}}</td>
+			<td>{{v.address}}</td>
+			<td>{{v.gender}}</td>
+			<td>{{v.phone}}</td>
+			<td>{{v.dob}}</td>
+			<td>{{v.country}}</td>
+			<td>{{v.file}}</td>
+			<td>{{v.username}}</td>
+			<td>{{v.password}}</td>
+			<td>{{v.status}}</td>
+			<td><a href="{% url 'approve' v.id %}">Approve</a></td>
+			<td><a href="{% url 'reject' v.id %}">Reject</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

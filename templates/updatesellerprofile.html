@@ -1,0 +1,173 @@
+<html>
+	<script type="text/javascript">
+		function validation()
+		{
+			var num=/^[0-9]+$/;
+			var alpha=/^[a-zA-Z]+$/;
+
+			var name=document.getElementById("name")
+			var address=document.getElementById("address")
+			var phone=document.getElementById("phone")
+			var dob=document.getElementById("dob")
+			var country=document.myform.country;
+			var username=document.getElementById("username")
+			var password=document.getElementById("password")
+			var gender=document.myform.gender;
+			var filename=document.getElementById("filename")
+			var file=document.getElementById("file")
+
+			if(name.value.length==0)
+			{
+				alert("enter a name")
+				return false;
+			}
+			else if(!name.value.match(alpha))
+			{
+				alert("enter a valid name")
+				name.focus();
+				return false;
+			}
+			else if(address.value.length==0)
+			{
+				alert("enter a address")
+				return false;
+			}
+			else if(gender[0].checked==false && gender[1].checked==false)
+			{
+				alert("enter a valid gender")
+				return false;
+			}
+
+			else if(dob.value.length==0)
+			{
+				alert("enter a dob")
+				return false;
+			}
+			else if(phone.value.length==0)
+			{
+				alert("enter a phone number")
+				return false;
+			}
+			else if(!phone.value.match(num))
+			{
+				alert("enter a valid phone number")
+				phone.focus();
+				return false;
+			}
+			else if(country.value.length==0)
+			{
+				alert("enter a country")
+				return false;
+			}
+			
+			else if(username.value.length==0)
+			{
+				alert("enter a username")
+				return false;
+			}
+			else if(password.value.length==0)
+			{
+				alert("enter a password")
+				return false;
+			}
+			else if(filename.value.length==0)
+			{
+				alert("enter a filename")
+				return false;
+			}
+			else if(file.value.length==0)
+			{
+				alert("upload a file")
+				return false;
+			}
+
+			else
+			{
+				return true;
+			}
+		}
+
+	</script>
+
+	<body>
+		<form method="post" action="{% url 'updatesellerAction'%}" name="myform" id="myform" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% for v in seller %}
+		<input type="hidden" name="id" value="{{v.id}}">
+			<table>
+				<tr>
+				<td>NAME</td>
+				<td><input type="text" name="name" id="name" value="{{v.name}}"></td>
+				</tr>
+
+				<tr>
+				<td>ADDRESS</td>
+				<td><textarea name="address" rows="4" coloumns="10" id="address">{{v.address}}</textarea></td>
+				</tr>
+
+				<tr>
+				<td>GENDER</td>
+				<td>
+				{% if v.gender == 'male' %}
+				<input type="radio" name="gender" value="male" checked="true">Male
+				<input type="radio" name="gender" value="female">female
+				{% else %}
+				<input type="radio" name="gender" value="male">Male
+				<input type="radio" name="gender" value="female" checked="true">Female
+				{% endif %}
+				</td>	
+				</tr>
+
+				<tr>
+				<td>DOB</td>
+				<td><input type="date" name="dob" id="dob" value="{{v.dob}}"></td>
+				</tr>
+
+				<tr>
+				<td>PHONE NUMBER</td>
+				<td><input type="text" name="phone" id="phone" value="{{v.phone}}"></td>
+				</tr>
+					
+				<tr>
+				<td>COUNTRY</td>
+				<td>
+				<select name="country" value="{{country}}">
+				<option value="">--select--</option>
+				<option value="india">india</option>
+				<option value="america">america</option>
+				<option value="china">china</option>
+				</select>
+				</td>
+				</tr>
+
+				<tr>
+				<td>USERNAME</td>
+				<td><input type="text" name="username" id="username" value="{{v.username}}"></td>
+				</tr>
+
+				<tr>
+				<td>PASSWORD</td>
+				<td><input type="password" name="password" id="password" value="{{v.password}}"></td>
+				</tr>
+
+				<tr>
+				<td>FILE</td>
+				<td><img src="{{v.file.url}}" height="100px" width="50px" alt="no pic"></td>
+				<td><input type="file" name="file" id="file"></td>
+				</tr>
+				
+				<tr>
+				<td></td>
+				<td><input type="submit" value="update" onclick="return validation()"></td>
+				</tr>
+			{% endfor %}
+			</table>
+		</form>
+	</body>
+{% if messages %}
+	{% for msg in messages %}
+	<script>
+		alert('{{msg}}')
+	</script>
+	{% endfor %}
+{% endif %}

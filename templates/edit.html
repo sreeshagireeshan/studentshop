@@ -1,0 +1,132 @@
+<html>
+	<script type="text/javascript">
+		function validation()
+		{
+			var num=/^[0-9]+$/;
+			var alpha=/^[a-zA-Z]+$/;
+
+			var productname=document.getElementById("productname")
+			var details=document.getElementById("details")
+			var price=document.getElementById("price")
+			var stock=document.getElementById("stock")
+			var file=document.getElementById("file")
+			var category=document.getElementById("category")
+			if(productname.value.length==0)
+			{
+				alert("enter a productname")
+				return false;
+			}
+			else if(!productname.value.match(alpha))
+			{
+				alert("enter a valid productname")
+				productname.focus();
+				return false;
+			}
+			else if(details.value.length==0)
+			{
+				alert("enter a details")
+				return false;
+			}
+			
+			else if(price.value.length==0)
+			{
+				alert("enter a price")
+				return false;
+			}
+			else if(!price.value.match(num))
+			{
+				alert("enter a valid price")
+				price.focus();
+				return false;
+			}
+			else if(stock.value.length==0)
+			{
+				alert("enter a stock")
+				return false;
+			}
+			else if(!stock.value.match(num))
+			{
+				alert("enter a valid stock")
+				stock.focus();
+				return false;
+			}
+			else if(file.value.length==0)
+			{
+				alert("upload a file")
+				return false;
+			}
+			
+			else if(category.value.length==0)
+			{
+				alert("enter a category")
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+	</script>
+	<body>
+		<form method="post" action="{% url 'editupdateAction' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+		{% for v in seller %}
+		<input type="hidden" name="id" value="{{v.id}}">
+			<table>
+				<tr>
+				<td>Product Name</td>
+				<td><input type="text" name="productname" id="productname" value="{{v.productname}}"></td>
+				</tr>
+
+				<tr>
+				<td>Details</td>
+				<td><textarea name="details" row="10" coloum="10" id="details">{{v.details}}</textarea></td>
+				</tr>
+
+	`			<tr>
+				<td>Price</td>
+				<td><input type="text" name="price" id="price" value="{{v.price}}"></td>
+				</tr>
+
+				<tr>
+				<td>Stock</td>
+				<td><input type="text" name="stock" id="stock" value="{{v.stock}}"></td>
+				</tr>
+
+				<tr>
+				<td>File</td>
+				<td><input type="file" name="file" id="file" ></td>
+				<td>	
+				<img src="{{v.file.url}}" height="100px" width="50px" alt="no pic">
+				</td>
+				</tr>
+
+				<tr>
+				<td>Category</td>
+				<td>
+				<select name="category" id="category">
+				<option value="">--select--</option>
+				{% for v in category %}
+				<option value="{{v.id}}">{{v.name}}</option>
+				{% endfor %}
+				</select>
+				</td>
+				</tr>
+				
+				<tr>
+				<td></td>
+				<td><input type="submit" value="update" onclick="return validation()"></td>
+				</tr>
+			</table>
+		{% endfor %}
+		</form>
+	</body>
+{% if messages %}
+	{% for msg in messages %}
+	<script>
+		alert('{{msg}}')
+	</script>
+	{% endfor %}
+{% endif %}
+</html>

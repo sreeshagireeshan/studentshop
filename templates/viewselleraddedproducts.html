@@ -1,0 +1,38 @@
+<html>
+	<body>
+		<table>
+			<tr>
+			<th>Product Name</th>
+			<th>Details</th>
+			<th>Price</th>
+			<th>Stock</th>
+			<th>category</th>
+			<th>File</th>
+			</tr>
+			{% for v in buyer %}
+			<tr>
+			<td>{{v.productname}}</td>
+			<td>{{v.details}}</td>
+			<td>{{v.price}}</td>
+			<td>{{v.stock}}</td>
+			<td>{{v.categoryid.name}}</td>	
+			<td>
+			<img src="{{v.file.url}}" height="100px" width="50px" alt="no pic">
+			</td>
+			<td><a href="{% url 'addtocart' v.id %}">Add to Cart</td>	
+			</tr>
+			{% endfor %}
+	
+		</table>
+	</body>
+{% if messages %}
+	{% for msg in messages %}
+	<script>
+		alert('{{msg}}')
+	</script>
+	{% endfor %}
+{% endif %}
+
+	<li><a href="{% url 'viewcart' %}">View Cart</a></li>
+</html>
+

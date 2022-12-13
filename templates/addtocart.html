@@ -1,0 +1,116 @@
+<html>
+<script src="/static/jquery-1.8.3.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		$("#quantity").change(function(){
+		var quantity=parseInt($("#quantity").val());
+		var price=parseInt($("#price").val());
+		var totalprice=quantity*price;
+		$("#totalprice").val(totalprice)
+		});
+		});
+	</script>
+	<script type="text/javascript">
+		function validation()
+		{
+			var num=/^[0-9]+$/;
+			var alpha=/^[a-zA-Z]+$/;
+
+			var quantity=document.getElementById("quantity")
+			var shippingaddress=document.getElementById("shippingaddress")
+			var contactnumber=document.getElementById("contactnumber")
+			
+			if(quantity.value.length==0)
+			{
+				alert("enter a quantity")
+				return false;
+			}
+			else if(!quantity.value.match(num))
+			{
+				alert("enter a valid quantity")
+				quantity.focus();
+				return false;
+			}
+			else if(shippingaddress.value.length==0)
+			{
+				alert("enter a shipping address")
+				return false;
+			}
+			
+			else if(contactnumber.value.length==0)
+			{
+				alert("enter a contact number")
+				return false;
+			}
+			else if(!contactnumber.value.match(num))
+			{
+				alert("enter a valid contact number")
+				contactnumber.focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+	</script>
+	<body>
+		<form method="post" action="{% url 'buynowAction' %}">
+			{% csrf_token %}
+			{%for v in product%}
+			<input type="hidden" name="id" value="{{v.id}}">
+			<input type="hidden" name="price" value="{{v.price}}" id="price">
+			<table>
+				<tr>
+				<td>Product Name</td>
+				<td><input type="text" name="productname" value="{{v.productname}}"></td>
+				</tr>
+				
+				<tr>		
+				<td>file</td>
+				<td><img src="{{v.file.url}}" height="100px" width="50px" alt="no pic"></td>
+				</tr>
+
+				<tr>
+				<td>Price</td>
+				<td><input type="text" name="price" value="{{v.price}}"></td>
+				</tr>
+
+				<tr>
+				<td>quantity</td>
+				<td><input type="text" name="quantity" id="quantity"></td>
+				</tr>
+			
+				<tr>
+				<td>shipping address</td>
+				<td><textarea name="shippingaddress" row="5" coloum="10" id="shippingaddress"></textarea></td>
+				</tr>
+
+				<tr>
+				<td>contact number</td>
+				<td><input type="text" name="contactnumber" id="contactnumber"></td>
+				</tr>
+
+				<tr>
+				<td>Total price</td>
+				<td><input type="text" name="totalprice" readonly="true" id="totalprice"></td>
+				</tr>
+				
+				<tr>
+				<td></td>
+				<td><input type="submit" value="Add to cart" onclick="return validation()"></td>
+				</tr>
+			</table>
+			{% endfor %}
+		</form>
+	</body>
+{% if messages %}
+	{% for msg in messages %}
+	<script>
+		alert('{{msg}}')
+	</script>
+	{% endfor %}
+{% endif %}
+
+</html>

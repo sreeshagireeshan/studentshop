@@ -1,0 +1,42 @@
+<html>
+	<body>
+		<table>
+			<tr>
+			<th>Product Name</th>
+			<th>Quantity</th>
+			<th>Date</th>
+			<th>time</th>
+			<th>Total Price</th>
+			<th>Shipping address</th>
+			<th>contact number</th>
+			<th>Seller Name</th>
+			<th>Status</th>
+			<th>File</th>
+			</tr>
+
+			
+			{% for v in orders %}
+			<tr>
+			<td>{{v.productid.productname}}</td>
+			<td>{{v.quantity}}</td>
+			<td>{{v.date}}</td>
+			<td>{{v.time}}</td>
+			<td>{{v.totalprice}}</td>
+			<td>{{v.shippingaddress}}</td>
+			<td>{{v.contactnumber}}</td>	
+			<td>{{v.sellerid.username}}</td>
+			<td>{{v.status}}</td>
+			<td>
+			<img src="{{v.productid.file.url}}" height="100px" width="50px" alt="no pic">
+			</td>
+			{% if v.status == 'pending' %}
+			<td><a href="{% url 'cancel' v.id %}">cancel</a></td>
+			{% endif %}
+			<td><a href="{% url 'trackmyorder' v.id %}">Track My Order</a></td>		
+			</tr>
+			{% endfor %}
+				
+			
+		</table>
+	</body>
+</html>

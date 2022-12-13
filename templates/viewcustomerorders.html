@@ -1,0 +1,44 @@
+<html>
+	<body>
+		<table>
+			<tr>
+			<th>Product Name</th>
+			<th>Quantity</th>
+			<th>Date</th>
+			<th>time</th>
+			<th>Total Price</th>
+			<th>Shipping address</th>
+			<th>contact number</th>
+			<th>buyer Name</th>
+			<th>Status</th>
+			<th>File</th>
+			</tr>
+
+			
+			{% for v in profit1 %}
+			<tr>
+			<td>{{v.productid.productname}}</td>
+			<td>{{v.quantity}}</td>
+			<td>{{v.date}}</td>
+			<td>{{v.time}}</td>
+			<td>{{v.totalprice}}</td>
+			<td>{{v.shippingaddress}}</td>
+			<td>{{v.contactnumber}}</td>	
+			<td>{{v.buyerid.username}}</td>
+			<td>{{v.status}}</td>
+			<td>
+			<img src="{{v.productid.file.url}}" height="100px" width="50px" alt="no pic">
+			</td>
+			<td><a href="{% url 'orderapprove' v.id %}">Approve</a></td>
+			<td><a href="{% url 'orderreject' v.id %}">Reject</a></td>
+			{% if v.status == 'approved' %}
+			<td><a href="{% url 'trackorder' v.id %}">Track Order</a></td>
+			{% endif %}
+			{% if v.status == 'rejected' %}
+			<td><a href="{% url 'confirmcancel' v.id %}">Confirm cancel</a></td>
+			{% endif %}		
+			</tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
